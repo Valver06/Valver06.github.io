@@ -335,6 +335,36 @@ body {
   }
 }
 
+/* ===== Selector de idioma (ES / EN) ===== */
+.idiomas {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 20px;
+}
+
+.idiomas button {
+  background: transparent;
+  color: var(--blanco);
+  border: 2px solid var(--blanco);
+  border-radius: 4px;
+  padding: 2px 10px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.idiomas button:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+.idiomas button.activo {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--texto);
+}
+
 /* ===== Respeta a quienes desactivan las animaciones en su dispositivo ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
