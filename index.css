@@ -92,6 +92,17 @@ body {
 .hero .contenedor {
   position: relative;
   z-index: 1;
+  animation: entrada 1s ease both;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
 }
 
 @keyframes zoomLento {
@@ -99,29 +110,9 @@ body {
   to   { transform: scale(1.12); }
 }
 
-/* ===== Celulares: foto completa arriba, texto abajo ===== */
-@media (max-width: 600px) {
-  .hero {
-    padding: 0 0 40px;
-  }
-
-  .hero::before {
-    position: relative;
-    display: block;
-    inset: auto;
-    aspect-ratio: 1200 / 828;
-    margin-bottom: 30px;
-    background: url("Buceta_portada.jpeg") center / cover;
-    animation: none;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .menu a {
-    margin: 0 10px 0 0;
-  }
+@keyframes entrada {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== Botones ===== */
@@ -147,6 +138,19 @@ body {
 .boton.verde {
   background: #25d366;
   color: var(--blanco);
+  animation: pulso 2.5s infinite;
+}
+
+@keyframes pulso {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70%  { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+@keyframes pulsoAmarillo {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.6); }
+  70%  { box-shadow: 0 0 0 14px rgba(255, 193, 7, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
 }
 
 /* ===== Secciones ===== */
@@ -182,23 +186,36 @@ body {
   background: var(--blanco);
   padding: 30px;
   border-radius: 10px;
+  border-top: 5px solid var(--principal);
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .tarjeta:hover {
   transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(198, 40, 40, 0.25);
 }
 
 .tarjeta.destacada {
   border: 3px solid var(--acento);
+  border-top: 5px solid var(--principal);
 }
 
 .icono {
   font-size: 2.5rem;
   display: block;
   margin-bottom: 10px;
+}
+
+.tarjeta:hover .icono {
+  animation: rebote 0.6s ease;
+}
+
+@keyframes rebote {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-12px); }
+  70%      { transform: translateY(-4px); }
 }
 
 .tarjeta h3 {
@@ -246,43 +263,7 @@ body {
   padding: 20px 0;
 }
 
-@media (max-width: 600px) {
-  .hero {
-    background: var(--oscuro);
-    padding: 0 0 40px;
-  }
-
-  /* La foto completa arriba, sin recortes */
-  .hero::before {
-    content: "";
-    display: block;
-    aspect-ratio: 1200 / 828;
-    background: url("Buceta_portada.jpeg") center / cover;
-    margin-bottom: 30px;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .menu a {
-    margin: 0 10px 0 0;
-  }
-}
-
-/* ===== Animaciones de toda la página ===== */
-
-/* Portada: aparece al cargar */
-.hero .contenedor {
-  animation: entrada 1s ease both;
-}
-
-@keyframes entrada {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Elementos que aparecen al hacer scroll */
+/* ===== Aparición al hacer scroll (la activa el JavaScript) ===== */
 .oculta {
   opacity: 0;
   transform: translateY(30px);
@@ -294,42 +275,67 @@ body {
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-/* Tarjetas: borde rojo, sombra al pasar el mouse y ícono que rebota */
-.tarjeta {
-  border-top: 5px solid var(--principal);
+/* ===== Celulares: foto completa arriba, texto abajo y mismo dinamismo ===== */
+@media (max-width: 600px) {
+  .hero {
+    background: var(--oscuro);
+    padding: 0 0 40px;
+  }
+
+  /* La foto completa arriba, sin recortes y con zoom lento */
+  .hero::before {
+    position: relative;
+    display: block;
+    inset: auto;
+    aspect-ratio: 1200 / 828;
+    margin-bottom: 30px;
+    background: url("Buceta_portada.jpeg") center / cover;
+    animation: zoomLento 14s ease-in-out infinite alternate;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  /* El botón "Reservar ahora" late para llamar la atención */
+  .hero .boton {
+    animation: pulsoAmarillo 2.5s infinite;
+  }
+
+  .menu a {
+    margin: 0 10px 0 0;
+  }
+
+  /* Evita que las animaciones laterales generen scroll horizontal */
+  .seccion {
+    overflow: hidden;
+  }
+
+  /* Las tarjetas entran alternando izquierda y derecha */
+  .tarjeta.oculta:nth-child(odd) {
+    transform: translateX(-50px);
+  }
+
+  .tarjeta.oculta:nth-child(even) {
+    transform: translateX(50px);
+  }
+
+  /* Efecto al tocar (reemplaza al hover) */
+  .tarjeta:active {
+    transform: scale(0.97);
+    box-shadow: 0 10px 24px rgba(198, 40, 40, 0.25);
+  }
+
+  .tarjeta:active .icono {
+    animation: rebote 0.6s ease;
+  }
+
+  .boton:active {
+    transform: scale(0.95);
+  }
 }
 
-.tarjeta.destacada {
-  border: 3px solid var(--acento);
-  border-top: 5px solid var(--principal);
-}
-
-.tarjeta:hover {
-  box-shadow: 0 10px 24px rgba(198, 40, 40, 0.25);
-}
-
-.tarjeta:hover .icono {
-  animation: rebote 0.6s ease;
-}
-
-@keyframes rebote {
-  0%, 100% { transform: translateY(0); }
-  40%      { transform: translateY(-12px); }
-  70%      { transform: translateY(-4px); }
-}
-
-/* Botones con un pequeño pulso */
-.boton.verde {
-  animation: pulso 2.5s infinite;
-}
-
-@keyframes pulso {
-  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
-  70%  { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-}
-
-/* Respeta a quienes desactivan las animaciones en su dispositivo */
+/* ===== Respeta a quienes desactivan las animaciones en su dispositivo ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
