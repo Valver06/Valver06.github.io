@@ -15,7 +15,7 @@
       <nav class="menu">
         <a href="#servicios">Servicios</a>
         <a href="#nosotros">Nosotros</a>
-        <a href="#tarifas">Tarifas</a>
+        <a href="#vehículos">vehículo</a>
         <a href="#contacto">Contacto</a>
       </nav>
     </div>
@@ -65,35 +65,62 @@
     </div>
   </section>
 
-  <!-- TARIFAS -->
-  <section class="seccion" id="tarifas">
-    <div class="contenedor">
-      <h2>Tarifas</h2>
-      <div class="tarjetas">
-        <article class="tarjeta">
-          <h3>Ruta corta</h3>
-          <p class="precio">₡ 15.000</p>
-          <p>Dentro de Pavones</p>
-        </article>
-        <article class="tarjeta destacada">
-          <h3>Aeropuerto</h3>
-          <p class="precio">₡ 30.000</p>
-          <p>Ida o regreso</p>
-        </article>
-        <article class="tarjeta">
-          <h3>Por hora</h3>
-          <p class="precio">₡ 5.000</p>
-          <p>Por la espera</p>
-        </article>
-      </div>
+  <!-- VEHÍCULO -->
+<section class="seccion" id="vehiculo">
+  <div class="contenedor">
+    <h2>Características del vehículo</h2>
+    <div class="tarjetas">
+      <article class="tarjeta destacada">
+        <span class="icono">🚙</span>
+        <h3>Taxi 4x4</h3>
+        <p>Tracción 4x4 para llegar cómodo y seguro a cualquier camino de la zona.</p>
+      </article>
+      <article class="tarjeta destacada">
+        <span class="icono">✅</span>
+        <h3>Servicio autorizado</h3>
+        <p>Concesión con el MOPT y el CTP para el transporte de personas.</p>
+      </article>
+      <article class="tarjeta destacada">
+        <span class="icono">👥</span>
+        <h3>Capacidad</h3>
+        <p>Máximo 7 personas, con espacio para el equipaje.</p>
+      </article>
+      <article class="tarjeta destacada">
+        <span class="icono">♿</span>
+        <h3>Accesible</h3>
+        <p>Cuenta con rampa para personas en silla de ruedas.</p>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- CONTACTO -->
-  <section class="seccion gris" id="contacto">
+    <section class="seccion gris" id="contacto">
     <div class="contenedor">
       <h2>Contáctanos</h2>
-      <script>
+       <p class="texto-centrado">📞 Tel: +506 8533-2614 &nbsp;|&nbsp; ✉️ 42tinoco@gmail.com</p>
+
+       <form class="formulario" id="form-cotizacion">
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+        <input type="tel" id="telefono" placeholder="Tu teléfono" required>
+        <input type="text" id="ruta" placeholder="Origen y destino" required>
+        <textarea id="detalles" rows="4" placeholder="Fecha, hora y número de pasajeros"></textarea>
+        <button type="submit" class="boton">Solicitar cotización por WhatsApp</button>
+      </form>
+
+       <p class="texto-centrado">
+       <a class="boton verde" href="https://wa.me/50685332614" target="_blank">Escribir por WhatsApp</a>
+     </p>
+    </div>
+  </section>
+        
+  <!-- PIE -->
+  <footer class="footer">
+    <p>&copy; 2026 Playa Pavones Tours. Todos los derechos reservados.</p>
+  </footer>
+
+   <script>
+    // 1. Formulario: enviar cotización por WhatsApp
     document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -112,16 +139,39 @@
       var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
       window.open(url, "_blank");
     });
-  </script>
-        <a class="boton verde" href="https://wa.me/50685332614" target="_blank">Escribir por WhatsApp</a>
-      </p>
-    </div>
-  </section>
 
-  <!-- PIE -->
-  <footer class="footer">
-    <p>&copy; 2026 Playa Pavones Tours. Todos los derechos reservados.</p>
-  </footer>
+    // 2. Animación al hacer scroll en toda la página
+    var elementos = document.querySelectorAll(
+      ".seccion h2, .tarjeta, .texto-centrado, .formulario"
+    );
+
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (entrada) {
+        if (entrada.isIntersecting) {
+          var el = entrada.target;
+          el.classList.remove("oculta");
+          el.classList.add("visible");
+          observador.unobserve(el);
+
+          // Al terminar, quita la clase para que el hover funcione normal
+          setTimeout(function () {
+            el.classList.remove("visible");
+            el.style.transitionDelay = "";
+          }, 1200);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    elementos.forEach(function (el) {
+      el.classList.add("oculta");
+      // Las tarjetas de una misma fila aparecen una tras otra
+      if (el.classList.contains("tarjeta")) {
+        var posicion = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.transitionDelay = posicion * 0.15 + "s";
+      }
+      observador.observe(el);
+    });
+  </script>
 
 </body>
 </html>
