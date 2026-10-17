@@ -93,15 +93,26 @@
   <section class="seccion gris" id="contacto">
     <div class="contenedor">
       <h2>Contáctanos</h2>
-      <p class="texto-centrado">📞 Tel: +506 8533-2614 &nbsp;|&nbsp; ✉️ 42tinoco@gmail.com</p>
-      <form class="formulario">
-        <input type="text" placeholder="Tu nombre" required>
-        <input type="tel" placeholder="Tu teléfono" required>
-        <input type="text" placeholder="Origen y destino" required>
-        <textarea rows="4" placeholder="Fecha, hora y número de pasajeros"></textarea>
-        <button type="submit" class="boton">Solicitar cotización</button>
-      </form>
-      <p class="texto-centrado">
+      <script>
+    document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var nombre = document.getElementById("nombre").value;
+      var telefono = document.getElementById("telefono").value;
+      var ruta = document.getElementById("ruta").value;
+      var detalles = document.getElementById("detalles").value;
+
+      var mensaje =
+        "Hola, quiero solicitar una cotización.\n" +
+        "Nombre: " + nombre + "\n" +
+        "Teléfono: " + telefono + "\n" +
+        "Origen y destino: " + ruta + "\n" +
+        "Fecha, hora y pasajeros: " + (detalles || "No indicado");
+
+      var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
+      window.open(url, "_blank");
+    });
+  </script>
         <a class="boton verde" href="https://wa.me/50685332614" target="_blank">Escribir por WhatsApp</a>
       </p>
     </div>
