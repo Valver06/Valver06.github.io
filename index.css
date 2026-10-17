@@ -66,23 +66,62 @@ body {
   color: var(--acento);
 }
 
-/* ===== Portada ===== */
+/* ===== Portada con imagen dinámica ===== */
 .hero {
-  background: linear-gradient(rgba(142, 27, 27, 0.65), rgba(33, 33, 33, 0.7)),
-              url("Buceta_portada.jpeg") center/cover;
+  position: relative;
+  overflow: hidden;
+  background: var(--oscuro);
   color: var(--blanco);
   text-align: center;
   padding: clamp(120px, 25vw, 300px) 0;
 }
 
-.hero h1 {
-  font-size: 2.8rem;
-  margin-bottom: 15px;
+/* La foto va en una capa propia para poder animarla */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(142, 27, 27, 0.65), rgba(33, 33, 33, 0.7)),
+    url("Buceta_portada.jpeg") center 60% / cover;
+  animation: zoomLento 20s ease-in-out infinite alternate;
+  z-index: 0;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
+/* El texto queda por encima de la foto */
+.hero .contenedor {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes zoomLento {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+/* ===== Celulares: foto completa arriba, texto abajo ===== */
+@media (max-width: 600px) {
+  .hero {
+    padding: 0 0 40px;
+  }
+
+  .hero::before {
+    position: relative;
+    display: block;
+    inset: auto;
+    aspect-ratio: 1200 / 828;
+    margin-bottom: 30px;
+    background: url("Buceta_portada.jpeg") center / cover;
+    animation: none;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .menu a {
+    margin: 0 10px 0 0;
+  }
 }
 
 /* ===== Botones ===== */
@@ -207,7 +246,6 @@ body {
   padding: 20px 0;
 }
 
-/* ===== Celulares ===== */
 @media (max-width: 600px) {
   .hero {
     background: var(--oscuro);
@@ -230,4 +268,72 @@ body {
   .menu a {
     margin: 0 10px 0 0;
   }
+}
+
+/* ===== Animaciones de toda la página ===== */
+
+/* Portada: aparece al cargar */
+.hero .contenedor {
+  animation: entrada 1s ease both;
+}
+
+@keyframes entrada {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Elementos que aparecen al hacer scroll */
+.oculta {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* Tarjetas: borde rojo, sombra al pasar el mouse y ícono que rebota */
+.tarjeta {
+  border-top: 5px solid var(--principal);
+}
+
+.tarjeta.destacada {
+  border: 3px solid var(--acento);
+  border-top: 5px solid var(--principal);
+}
+
+.tarjeta:hover {
+  box-shadow: 0 10px 24px rgba(198, 40, 40, 0.25);
+}
+
+.tarjeta:hover .icono {
+  animation: rebote 0.6s ease;
+}
+
+@keyframes rebote {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-12px); }
+  70%      { transform: translateY(-4px); }
+}
+
+/* Botones con un pequeño pulso */
+.boton.verde {
+  animation: pulso 2.5s infinite;
+}
+
+@keyframes pulso {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70%  { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* Respeta a quienes desactivan las animaciones en su dispositivo */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .oculta { opacity: 1; transform: none; }
 }
