@@ -120,6 +120,132 @@
   </footer>
 
    <script>
+    // ===== 0. IDIOMAS (español / inglés) =====
+    // Para agregar o corregir un texto, edita aquí. La clave (por ejemplo "hero_titulo")
+    // es la misma que va en data-i18n="..." dentro del HTML.
+    var traducciones = {
+      es: {
+        menu_servicios: "Servicios",
+        menu_nosotros: "Nosotros",
+        menu_vehiculos: "Vehículos",
+        menu_contacto: "Contacto",
+        hero_titulo: "Viaja seguro, llega a tiempo",
+        hero_texto: "Transporte de personas y turismo con puntualidad, comodidad y precios justos.",
+        hero_boton: "Reservar ahora",
+        serv_titulo: "Nuestros servicios",
+        serv1_t: "Traslados al aeropuerto",
+        serv1_p: "Te recogemos y te llevamos a tu vuelo sin preocupaciones.",
+        serv2_t: "Turismo",
+        serv2_p: "Tours y excursiones para grupos y familias.",
+        serv3_t: "Transporte empresarial",
+        serv3_p: "Rutas para empleados, eventos y reuniones.",
+        nos_titulo: "Sobre nosotros",
+        nos_texto: "Somos un servicio de transporte, verificado ante el CTP y MOPT, con años de experiencia en Playa Pavones de Golfito. Actualmente contamos con 2 vehículos tipo microbús, 1 tipo 4x4, están en excelente estado y nuestros conductores son responsables y gentiles.",
+        veh_titulo: "Características del vehículo",
+        veh1_t: "Taxi 4x4",
+        veh1_p: "Tracción 4x4 para llegar cómodo y seguro a cualquier camino de la zona.",
+        veh2_t: "Servicio autorizado",
+        veh2_p: "Concesión con el MOPT y el CTP para el transporte de personas.",
+        veh3_t: "Capacidad",
+        veh3_p: "Máximo 7 personas, con espacio para el equipaje.",
+        veh4_t: "Accesible",
+        veh4_p: "Cuenta con rampa para personas en silla de ruedas.",
+        cont_titulo: "Contáctanos",
+        cont_datos: "📞 Tel: +506 8533-2614 \u00A0|\u00A0 ✉️ 42tinoco@gmail.com",
+        ph_nombre: "Tu nombre",
+        ph_telefono: "Tu teléfono",
+        ph_ruta: "Origen y destino",
+        ph_detalles: "Fecha, hora y número de pasajeros",
+        cont_enviar: "Solicitar cotización por WhatsApp",
+        cont_wa: "Escribir por WhatsApp",
+        pie: "© 2026 Playa Pavones Tours. Todos los derechos reservados.",
+        // Mensaje que se envía por WhatsApp
+        wa_saludo: "Hola, quiero solicitar una cotización.",
+        wa_nombre: "Nombre: ",
+        wa_telefono: "Teléfono: ",
+        wa_ruta: "Origen y destino: ",
+        wa_detalles: "Fecha, hora y pasajeros: ",
+        wa_noindicado: "No indicado"
+      },
+      en: {
+        menu_servicios: "Services",
+        menu_nosotros: "About us",
+        menu_vehiculos: "Vehicles",
+        menu_contacto: "Contact",
+        hero_titulo: "Travel safely, arrive on time",
+        hero_texto: "Passenger transport and tourism with punctuality, comfort and fair prices.",
+        hero_boton: "Book now",
+        serv_titulo: "Our services",
+        serv1_t: "Airport transfers",
+        serv1_p: "We pick you up and take you to your flight with no worries.",
+        serv2_t: "Tourism",
+        serv2_p: "Tours and excursions for groups and families.",
+        serv3_t: "Corporate transport",
+        serv3_p: "Routes for employees, events and meetings.",
+        nos_titulo: "About us",
+        nos_texto: "We are a transport service, verified by the CTP and MOPT, with years of experience in Playa Pavones, Golfito. We currently have 2 minibus-type vehicles and 1 4x4, all in excellent condition, and our drivers are responsible and friendly.",
+        veh_titulo: "Vehicle features",
+        veh1_t: "4x4 Taxi",
+        veh1_p: "4x4 traction to travel comfortably and safely on any road in the area.",
+        veh2_t: "Authorized service",
+        veh2_p: "Licensed by the MOPT and the CTP to transport passengers.",
+        veh3_t: "Capacity",
+        veh3_p: "Up to 7 people, with room for luggage.",
+        veh4_t: "Accessible",
+        veh4_p: "Equipped with a ramp for wheelchair users.",
+        cont_titulo: "Contact us",
+        cont_datos: "📞 Phone: +506 8533-2614 \u00A0|\u00A0 ✉️ 42tinoco@gmail.com",
+        ph_nombre: "Your name",
+        ph_telefono: "Your phone number",
+        ph_ruta: "Pick-up and drop-off",
+        ph_detalles: "Date, time and number of passengers",
+        cont_enviar: "Request a quote via WhatsApp",
+        cont_wa: "Message us on WhatsApp",
+        pie: "© 2026 Playa Pavones Tours. All rights reserved.",
+        wa_saludo: "Hello, I would like to request a quote.",
+        wa_nombre: "Name: ",
+        wa_telefono: "Phone: ",
+        wa_ruta: "Pick-up and drop-off: ",
+        wa_detalles: "Date, time and passengers: ",
+        wa_noindicado: "Not specified"
+      }
+    };
+
+    var idiomaActual = "es";
+
+    function cambiarIdioma(idioma) {
+      if (!traducciones[idioma]) { idioma = "es"; }
+      idiomaActual = idioma;
+      var t = traducciones[idioma];
+
+      // Textos normales
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var clave = el.getAttribute("data-i18n");
+        if (t[clave] !== undefined) { el.textContent = t[clave]; }
+      });
+
+      // Placeholders de los campos del formulario
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+        var clave = el.getAttribute("data-i18n-placeholder");
+        if (t[clave] !== undefined) { el.placeholder = t[clave]; }
+      });
+
+      // Idioma de la página y botón activo
+      document.documentElement.lang = idioma;
+      document.querySelectorAll(".idiomas button").forEach(function (b) {
+        b.classList.toggle("activo", b.getAttribute("data-lang") === idioma);
+      });
+
+      // Recordar la elección
+      try { localStorage.setItem("idioma", idioma); } catch (e) {}
+    }
+
+    // Al cargar: idioma guardado; si no hay, el del navegador (inglés) o español por defecto
+    var guardado = null;
+    try { guardado = localStorage.getItem("idioma"); } catch (e) {}
+    var delNavegador = (navigator.language || "es").slice(0, 2) === "en" ? "en" : "es";
+    cambiarIdioma(guardado || delNavegador);
+     
     // 1. Formulario: enviar cotización por WhatsApp
     document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
       e.preventDefault();
