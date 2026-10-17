@@ -8,20 +8,20 @@
 </head>
 <body>
 
-  <!-- ENCABEZADO -->
+<!-- ENCABEZADO -->
   <header class="header">
     <div class="contenedor header-contenido">
       <a href="#inicio" class="logo">🚕 Playa Pavones Tours</a>
       <nav class="menu">
-        <a href="#servicios">Servicios</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#vehículos">Vehículos</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#servicios" data-i18n="menu_servicios">Servicios</a>
+        <a href="#nosotros" data-i18n="menu_nosotros">Nosotros</a>
+        <a href="#vehiculos" data-i18n="menu_vehiculos">Vehículos</a>
+        <a href="#contacto" data-i18n="menu_contacto">Contacto</a>
         <!-- SELECTOR DE IDIOMA -->
         <span class="idiomas">
           <button type="button" data-lang="es" onclick="cambiarIdioma('es')">ES</button>
           <button type="button" data-lang="en" onclick="cambiarIdioma('en')">EN</button>
-          </span>
+        </span>
       </nav>
     </div>
   </header>
@@ -29,31 +29,31 @@
   <!-- PORTADA -->
   <section class="hero" id="inicio">
     <div class="contenedor">
-      <h1>Viaja seguro, llega a tiempo</h1>
-      <p>Transporte de personas y turismo con puntualidad, comodidad y precios justos.</p>
-      <a href="#contacto" class="boton">Reservar ahora</a>
+      <h1 data-i18n="hero_titulo">Viaja seguro, llega a tiempo</h1>
+      <p data-i18n="hero_texto">Transporte de personas y turismo con puntualidad, comodidad y precios justos.</p>
+      <a href="#contacto" class="boton" data-i18n="hero_boton">Reservar ahora</a>
     </div>
-  </section>  
+  </section>
 
   <!-- SERVICIOS -->
   <section class="seccion" id="servicios">
     <div class="contenedor">
-      <h2>Nuestros servicios</h2>
+      <h2 data-i18n="serv_titulo">Nuestros servicios</h2>
       <div class="tarjetas">
         <article class="tarjeta">
           <span class="icono">✈️</span>
-          <h3>Traslados al aeropuerto</h3>
-          <p>Te recogemos y te llevamos a tu vuelo sin preocupaciones.</p>
+          <h3 data-i18n="serv1_t">Traslados al aeropuerto</h3>
+          <p data-i18n="serv1_p">Te recogemos y te llevamos a tu vuelo sin preocupaciones.</p>
         </article>
         <article class="tarjeta">
           <span class="icono">🏖️</span>
-          <h3>Turismo</h3>
-          <p>Tours y excursiones para grupos y familias.</p>
+          <h3 data-i18n="serv2_t">Turismo</h3>
+          <p data-i18n="serv2_p">Tours y excursiones para grupos y familias.</p>
         </article>
         <article class="tarjeta">
           <span class="icono">🏢</span>
-          <h3>Transporte empresarial</h3>
-          <p>Rutas para empleados, eventos y reuniones.</p>
+          <h3 data-i18n="serv3_t">Transporte empresarial</h3>
+          <p data-i18n="serv3_p">Rutas para empleados, eventos y reuniones.</p>
         </article>
       </div>
     </div>
@@ -62,72 +62,70 @@
   <!-- NOSOTROS -->
   <section class="seccion gris" id="nosotros">
     <div class="contenedor">
-      <h2>Sobre nosotros</h2>
-      <p class="texto-centrado">
-        Somos un servicio de transporte, verificado ante el CTP y MOPT, con años de experiencia en Playa Pavones de Golfito. Actualmente contamos con 2 vehículos tipo microbús, 1 tipo 4x4, están
-        en excelente estado y nuestros conductores son responsables y gentiles.
+      <h2 data-i18n="nos_titulo">Sobre nosotros</h2>
+      <p class="texto-centrado" data-i18n="nos_texto">
+        Somos un servicio de transporte, verificado ante el CTP y MOPT, con años de experiencia en Playa Pavones de Golfito. Actualmente contamos con 2 vehículos tipo microbús, 1 tipo 4x4, están en excelente estado y nuestros conductores son responsables y gentiles.
       </p>
     </div>
   </section>
 
   <!-- VEHÍCULO -->
-<section class="seccion" id="vehículos">
-  <div class="contenedor">
-    <h2>Características del vehículo</h2>
-    <div class="tarjetas">
-      <article class="tarjeta destacada">
-        <span class="icono">🚙</span>
-        <h3>Taxi 4x4</h3>
-        <p>Tracción 4x4 para llegar cómodo y seguro a cualquier camino de la zona.</p>
-      </article>
-      <article class="tarjeta destacada">
-        <span class="icono">✅</span>
-        <h3>Servicio autorizado</h3>
-        <p>Concesión con el MOPT y el CTP para el transporte de personas.</p>
-      </article>
-      <article class="tarjeta destacada">
-        <span class="icono">👥</span>
-        <h3>Capacidad</h3>
-        <p>Máximo 7 personas, con espacio para el equipaje.</p>
-      </article>
-      <article class="tarjeta destacada">
-        <span class="icono">♿</span>
-        <h3>Accesible</h3>
-        <p>Cuenta con rampa para personas en silla de ruedas.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-  <!-- CONTACTO -->
-    <section class="seccion gris" id="contacto">
+  <section class="seccion" id="vehiculos">
     <div class="contenedor">
-      <h2>Contáctanos</h2>
-       <p class="texto-centrado">📞 Tel: +506 8533-2614 &nbsp;|&nbsp; ✉️ 42tinoco@gmail.com</p>
-
-       <form class="formulario" id="form-cotizacion">
-        <input type="text" id="nombre" placeholder="Tu nombre" required>
-        <input type="tel" id="telefono" placeholder="Tu teléfono" required>
-        <input type="text" id="ruta" placeholder="Origen y destino" required>
-        <textarea id="detalles" rows="4" placeholder="Fecha, hora y número de pasajeros"></textarea>
-        <button type="submit" class="boton">Solicitar cotización por WhatsApp</button>
-      </form>
-
-       <p class="texto-centrado">
-       <a class="boton verde" href="https://wa.me/50685332614" target="_blank">Escribir por WhatsApp</a>
-     </p>
+      <h2 data-i18n="veh_titulo">Características del vehículo</h2>
+      <div class="tarjetas">
+        <article class="tarjeta destacada">
+          <span class="icono">🚙</span>
+          <h3 data-i18n="veh1_t">Taxi 4x4</h3>
+          <p data-i18n="veh1_p">Tracción 4x4 para llegar cómodo y seguro a cualquier camino de la zona.</p>
+        </article>
+        <article class="tarjeta destacada">
+          <span class="icono">✅</span>
+          <h3 data-i18n="veh2_t">Servicio autorizado</h3>
+          <p data-i18n="veh2_p">Concesión con el MOPT y el CTP para el transporte de personas.</p>
+        </article>
+        <article class="tarjeta destacada">
+          <span class="icono">👥</span>
+          <h3 data-i18n="veh3_t">Capacidad</h3>
+          <p data-i18n="veh3_p">Máximo 7 personas, con espacio para el equipaje.</p>
+        </article>
+        <article class="tarjeta destacada">
+          <span class="icono">♿</span>
+          <h3 data-i18n="veh4_t">Accesible</h3>
+          <p data-i18n="veh4_p">Cuenta con rampa para personas en silla de ruedas.</p>
+        </article>
+      </div>
     </div>
   </section>
-        
+
+  <!-- CONTACTO -->
+  <section class="seccion gris" id="contacto">
+    <div class="contenedor">
+      <h2 data-i18n="cont_titulo">Contáctanos</h2>
+      <p class="texto-centrado" data-i18n="cont_datos">📞 Tel: +506 8533-2614 &nbsp;|&nbsp; ✉️ 42tinoco@gmail.com</p>
+
+      <form class="formulario" id="form-cotizacion">
+        <input type="text" id="nombre" placeholder="Tu nombre" data-i18n-placeholder="ph_nombre" required>
+        <input type="tel" id="telefono" placeholder="Tu teléfono" data-i18n-placeholder="ph_telefono" required>
+        <input type="text" id="ruta" placeholder="Origen y destino" data-i18n-placeholder="ph_ruta" required>
+        <textarea id="detalles" rows="4" placeholder="Fecha, hora y número de pasajeros" data-i18n-placeholder="ph_detalles"></textarea>
+        <button type="submit" class="boton" data-i18n="cont_enviar">Solicitar cotización por WhatsApp</button>
+      </form>
+
+      <p class="texto-centrado">
+        <a class="boton verde" href="https://wa.me/50685332614" target="_blank" data-i18n="cont_wa">Escribir por WhatsApp</a>
+      </p>
+    </div>
+  </section>
+
   <!-- PIE -->
   <footer class="footer">
-    <p>&copy; 2026 Playa Pavones Tours. Todos los derechos reservados.</p>
+    <p data-i18n="pie">&copy; 2026 Playa Pavones Tours. Todos los derechos reservados.</p>
   </footer>
 
-   <script>
+  <script>
     // ===== 0. IDIOMAS (español / inglés) =====
-    // Para agregar o corregir un texto, edita aquí. La clave (por ejemplo "hero_titulo")
-    // es la misma que va en data-i18n="..." dentro del HTML.
+    // La clave (por ejemplo "hero_titulo") es la misma que va en data-i18n="..." en el HTML.
     var traducciones = {
       es: {
         menu_servicios: "Servicios",
@@ -250,22 +248,23 @@
     try { guardado = localStorage.getItem("idioma"); } catch (e) {}
     var delNavegador = (navigator.language || "es").slice(0, 2) === "en" ? "en" : "es";
     cambiarIdioma(guardado || delNavegador);
-     
-    // 1. Formulario: enviar cotización por WhatsApp
+
+    // 1. Formulario: enviar cotización por WhatsApp (en el idioma elegido)
     document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
       e.preventDefault();
 
+      var t = traducciones[idiomaActual];
       var nombre = document.getElementById("nombre").value;
       var telefono = document.getElementById("telefono").value;
       var ruta = document.getElementById("ruta").value;
       var detalles = document.getElementById("detalles").value;
 
       var mensaje =
-        "Hola, quiero solicitar una cotización.\n" +
-        "Nombre: " + nombre + "\n" +
-        "Teléfono: " + telefono + "\n" +
-        "Origen y destino: " + ruta + "\n" +
-        "Fecha, hora y pasajeros: " + (detalles || "No indicado");
+        t.wa_saludo + "\n" +
+        t.wa_nombre + nombre + "\n" +
+        t.wa_telefono + telefono + "\n" +
+        t.wa_ruta + ruta + "\n" +
+        t.wa_detalles + (detalles || t.wa_noindicado);
 
       var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
       window.open(url, "_blank");
@@ -306,3 +305,4 @@
 
 </body>
 </html>
+
