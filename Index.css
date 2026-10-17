@@ -72,7 +72,7 @@ body {
               url("Buceta_portada.jpeg") center/cover;
   color: var(--blanco);
   text-align: center;
-  padding: 300px 0;
+  padding: clamp(120px, 25vw, 300px) 0;
 }
 
 .hero h1 {
@@ -209,9 +209,24 @@ body {
 
 /* ===== Celulares ===== */
 @media (max-width: 600px) {
+  .hero {
+    background: var(--oscuro);
+    padding: 0 0 40px;
+  }
+
+  /* La foto completa arriba, sin recortes */
+  .hero::before {
+    content: "";
+    display: block;
+    aspect-ratio: 1200 / 828;
+    background: url("Buceta_portada.jpeg") center / cover;
+    margin-bottom: 30px;
+  }
+
   .hero h1 {
     font-size: 2rem;
   }
+
   .menu a {
     margin: 0 10px 0 0;
   }
