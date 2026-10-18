@@ -144,7 +144,7 @@
     <p data-i18n="pie">&copy; 2026 Playa Pavones Tours. Todos los derechos reservados.</p>
   </footer>
 
-  <script>
+<script>
     // ===== 0. IDIOMAS (español / inglés) =====
     // La clave (por ejemplo "hero_titulo") es la misma que va en data-i18n="..." en el HTML.
     var traducciones = {
@@ -174,6 +174,29 @@
         veh3_p: "Comodidad, con espacio para el equipaje.",
         veh4_t: "Accesible",
         veh4_p: "Cuenta con rampa para personas en silla de ruedas.",
+        mapa_titulo: "Dónde trabajamos",
+        mapa_texto: "Prestamos servicio en Playa Pavones, Golfito y sus alrededores.",
+        mapa_boton: "Abrir en Google Maps",
+        clima_titulo: "Clima y mar en Pavones",
+        clima_aire: "Clima",
+        clima_oleaje: "Oleaje",
+        clima_mareas: "Mareas",
+        clima_nota: "Datos de pronóstico solo de referencia. No los uses para navegar ni para decisiones de seguridad en el mar.",
+        clima_cargando: "Cargando...",
+        clima_error: "No disponible por ahora",
+        clima_viento: "Viento: ",
+        clima_periodo: "Período: ",
+        clima_agua: "Agua: ",
+        clima_alta: "Marea alta: ",
+        clima_baja: "Marea baja: ",
+        clima_c0: "Despejado",
+        clima_c1: "Parcialmente nublado",
+        clima_c2: "Nublado",
+        clima_c3: "Niebla",
+        clima_c4: "Llovizna",
+        clima_c5: "Lluvia",
+        clima_c6: "Chubascos",
+        clima_c7: "Tormenta",
         // Tipo de cambio
         cambio_titulo: "Tipo de cambio",
         cambio_nota: "Valores de referencia. Pueden variar según el banco o la casa de cambio.",
@@ -189,8 +212,16 @@
         ph_nombre: "Tu nombre",
         ph_telefono: "Tu teléfono",
         ph_ruta: "Origen y destino",
-        ph_detalles: "Fecha, hora y número de pasajeros",
-        cont_enviar: "Solicitar cotización por WhatsApp",
+        lbl_fecha: "Fecha del viaje",
+        lbl_hora: "Hora de recogida",
+        ph_detalles: "Número de pasajeros y detalles del viaje",
+        cont_nota: "Al enviar, tu solicitud se registra en nuestro calendario. Después podrás confirmarla por WhatsApp.",
+        reserva_enviando: "Enviando tu solicitud...",
+        reserva_ok: "✅ ¡Solicitud registrada! Para confirmarla, envíanos el mensaje por WhatsApp.",
+        reserva_no_disponible: "❌ Ese horario no está disponible. Elige otra hora o fecha para tu viaje.",
+        reserva_fallo: "No pudimos registrar la solicitud automáticamente. Por favor, inténtalo nuevamente o contáctanos por WhatsApp.",
+        reserva_btn_wa: "Confirmar por WhatsApp",
+        cont_enviar: "Enviar solicitud de reserva",
         cont_wa: "Escribir por WhatsApp",
         pie: "© 2026 Playa Pavones Tours. Todos los derechos reservados.",
         // Mensaje que se envía por WhatsApp
@@ -198,7 +229,9 @@
         wa_nombre: "Nombre: ",
         wa_telefono: "Teléfono: ",
         wa_ruta: "Origen y destino: ",
-        wa_detalles: "Fecha, hora y pasajeros: ",
+        wa_fecha: "Fecha: ",
+        wa_hora: "Hora: ",
+        wa_detalles: "Pasajeros y detalles: ",
         wa_noindicado: "No indicado"
       },
       en: {
@@ -227,6 +260,29 @@
         veh3_p: "Comfortable, with room for luggage.",
         veh4_t: "Accessible",
         veh4_p: "Equipped with a ramp for wheelchair users.",
+        mapa_titulo: "Where we work",
+        mapa_texto: "We provide service in Playa Pavones, Golfito and the surrounding area.",
+        mapa_boton: "Open in Google Maps",
+        clima_titulo: "Weather and sea in Pavones",
+        clima_aire: "Weather",
+        clima_oleaje: "Waves",
+        clima_mareas: "Tides",
+        clima_nota: "Forecast data for reference only. Do not use it for navigation or sea safety decisions.",
+        clima_cargando: "Loading...",
+        clima_error: "Not available right now",
+        clima_viento: "Wind: ",
+        clima_periodo: "Period: ",
+        clima_agua: "Water: ",
+        clima_alta: "High tide: ",
+        clima_baja: "Low tide: ",
+        clima_c0: "Clear",
+        clima_c1: "Partly cloudy",
+        clima_c2: "Cloudy",
+        clima_c3: "Fog",
+        clima_c4: "Drizzle",
+        clima_c5: "Rain",
+        clima_c6: "Showers",
+        clima_c7: "Thunderstorm",
         // Exchange rate
         cambio_titulo: "Exchange rate",
         cambio_nota: "Reference values. They may vary depending on the bank or exchange office.",
@@ -242,15 +298,24 @@
         ph_nombre: "Your name",
         ph_telefono: "Your phone number",
         ph_ruta: "Pick-up and drop-off",
-        ph_detalles: "Date, time and number of passengers",
-        cont_enviar: "Request a quote via WhatsApp",
+        lbl_fecha: "Trip date",
+        lbl_hora: "Pick-up time",
+        ph_detalles: "Number of passengers and trip details",
+        cont_nota: "When you send this, your request is saved in our calendar. Then you can confirm it on WhatsApp.",
+        reserva_enviando: "Sending your request...",
+        reserva_ok: "✅ Request received! To confirm it, send us the message on WhatsApp.",
+        reserva_no_disponible: "❌ That time is unavailable. Please choose another time or date for your trip.",
+        reserva_fallo: "We couldn't save your request automatically. Please try again or contact us on WhatsApp.",
+        cont_enviar: "Send booking request",
         cont_wa: "Message us on WhatsApp",
         pie: "© 2026 Playa Pavones Tours. All rights reserved.",
         wa_saludo: "Hello, I would like to request a quote.",
         wa_nombre: "Name: ",
         wa_telefono: "Phone: ",
         wa_ruta: "Pick-up and drop-off: ",
-        wa_detalles: "Date, time and passengers: ",
+        wa_fecha: "Date: ",
+        wa_hora: "Time: ",
+        wa_detalles: "Passengers and details: ",
         wa_noindicado: "Not specified"
       }
     };
@@ -280,8 +345,10 @@
         b.classList.toggle("activo", b.getAttribute("data-lang") === idioma);
       });
 
-      // El tipo de cambio también se vuelve a escribir en el idioma elegido
+      // El tipo de cambio y el clima también se vuelven a escribir en el idioma elegido
       pintarCambio();
+      pintarMar();
+      pintarReserva();
 
       // Recordar la elección
       try { localStorage.setItem("idioma", idioma); } catch (e) {}
@@ -390,6 +457,162 @@
         });
     }
 
+    // ===== Clima, oleaje y mareas (Playa Pavones) =====
+    var PUNTO = { lat: 8.3987, lon: -83.1311 };
+    var datosMar = null;
+    var estadoMar = "cargando"; // "cargando", "ok" o "error"
+
+    // Dirección de la API. Si contratas el plan comercial, aquí cambia el servidor y agrega tu clave
+    var API_CLIMA = "https://api.open-meteo.com/v1/forecast";
+    var API_MAR = "https://marine-api.open-meteo.com/v1/marine";
+
+    function infoClima(codigo) {
+      if (codigo === 0) { return { icono: "☀️", clave: "clima_c0" }; }
+      if (codigo <= 2) { return { icono: "⛅", clave: "clima_c1" }; }
+      if (codigo === 3) { return { icono: "☁️", clave: "clima_c2" }; }
+      if (codigo === 45 || codigo === 48) { return { icono: "🌫️", clave: "clima_c3" }; }
+      if (codigo >= 51 && codigo <= 57) { return { icono: "🌦️", clave: "clima_c4" }; }
+      if (codigo >= 61 && codigo <= 67) { return { icono: "🌧️", clave: "clima_c5" }; }
+      if (codigo >= 80 && codigo <= 82) { return { icono: "🌦️", clave: "clima_c6" }; }
+      if (codigo >= 95) { return { icono: "⛈️", clave: "clima_c7" }; }
+      return { icono: "⛅", clave: "clima_c1" };
+    }
+
+    function brujula(grados) {
+      var nombres = idiomaActual === "en"
+        ? ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+        : ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
+      return nombres[Math.round(grados / 45) % 8];
+    }
+
+    // Convierte "2026-10-18T14:00" en "14:00" (español) o "2:00 PM" (inglés)
+    function formatoHora(texto) {
+      var h = Number(texto.slice(11, 13));
+      var m = texto.slice(14, 16);
+      if (idiomaActual === "en") {
+        var sufijo = h >= 12 ? "PM" : "AM";
+        h = h % 12;
+        if (h === 0) { h = 12; }
+        return h + ":" + m + " " + sufijo;
+      }
+      return (h < 10 ? "0" : "") + h + ":" + m;
+    }
+
+    // Busca la próxima marea alta y baja (máximos y mínimos del nivel del mar)
+    function proximasMareas(horas, niveles, desde) {
+      var alta = null;
+      var baja = null;
+      var inicio = 0;
+      for (var i = 0; i < horas.length; i++) {
+        if (horas[i] >= desde) { inicio = i; break; }
+      }
+      var fin = Math.min(inicio + 30, horas.length - 1);
+      for (var j = Math.max(inicio, 1); j < fin; j++) {
+        if (alta === null && niveles[j] > niveles[j - 1] && niveles[j] >= niveles[j + 1]) { alta = horas[j]; }
+        if (baja === null && niveles[j] < niveles[j - 1] && niveles[j] <= niveles[j + 1]) { baja = horas[j]; }
+      }
+      return { alta: alta, baja: baja };
+    }
+
+    function pintarMar() {
+      // Si la sección de clima todavía no está en el HTML, no hace nada
+      if (!document.getElementById("clima-temp")) { return; }
+
+      var t = traducciones[idiomaActual];
+      var ids = ["clima-temp", "clima-desc", "clima-viento", "mar-olas", "mar-periodo", "mar-agua", "marea-alta", "marea-baja"];
+
+      if (estadoMar !== "ok" || !datosMar) {
+        ids.forEach(function (id) { document.getElementById(id).textContent = ""; });
+        document.getElementById("clima-temp").textContent =
+          estadoMar === "error" ? t.clima_error : t.clima_cargando;
+        return;
+      }
+
+      var d = datosMar;
+      var info = infoClima(d.codigo);
+      var mareas = proximasMareas(d.horas, d.niveles, d.ahora);
+
+      document.getElementById("clima-icono").textContent = info.icono;
+      document.getElementById("clima-temp").textContent = Math.round(d.temp) + " °C";
+      document.getElementById("clima-desc").textContent = t[info.clave];
+      document.getElementById("clima-viento").textContent = t.clima_viento + Math.round(d.viento) + " km/h";
+
+      document.getElementById("mar-olas").textContent = d.olas !== null
+        ? d.olas.toFixed(1) + " m" + (d.direccion !== null ? " " + brujula(d.direccion) : "")
+        : "--";
+      document.getElementById("mar-periodo").textContent =
+        t.clima_periodo + (d.periodo !== null ? d.periodo.toFixed(0) + " s" : "--");
+      document.getElementById("mar-agua").textContent =
+        t.clima_agua + (d.agua !== null ? d.agua.toFixed(0) + " °C" : "--");
+
+      document.getElementById("marea-alta").textContent =
+        t.clima_alta + (mareas.alta ? formatoHora(mareas.alta) : "--");
+      document.getElementById("marea-baja").textContent =
+        t.clima_baja + (mareas.baja ? formatoHora(mareas.baja) : "--");
+    }
+
+    function pedirClimaMar() {
+      var ubicacion = "latitude=" + PUNTO.lat + "&longitude=" + PUNTO.lon + "&timezone=America%2FCosta_Rica";
+
+      var clima = fetch(API_CLIMA + "?" + ubicacion +
+        "&current=temperature_2m,weather_code,wind_speed_10m")
+        .then(function (r) { return r.json(); });
+
+      var mar = fetch(API_MAR + "?" + ubicacion +
+        "&current=wave_height,wave_period,wave_direction,sea_surface_temperature" +
+        "&hourly=sea_level_height_msl&forecast_days=3")
+        .then(function (r) { return r.json(); });
+
+      return Promise.all([clima, mar]).then(function (r) {
+        var c = r[0].current;
+        var m = r[1];
+        if (!c || !m.current || !m.hourly) { throw new Error("Sin datos"); }
+        return {
+          guardadoEn: Date.now(),
+          temp: c.temperature_2m,
+          codigo: c.weather_code,
+          viento: c.wind_speed_10m,
+          olas: m.current.wave_height,
+          periodo: m.current.wave_period,
+          direccion: m.current.wave_direction,
+          agua: m.current.sea_surface_temperature,
+          ahora: m.current.time,
+          horas: m.hourly.time,
+          niveles: m.hourly.sea_level_height_msl
+        };
+      });
+    }
+
+    function cargarClimaMar() {
+      var guardado = null;
+      try { guardado = JSON.parse(localStorage.getItem("climaMarCR")); } catch (e) {}
+
+      // Si los datos tienen menos de 30 minutos, no vuelve a pedirlos
+      if (guardado && Date.now() - guardado.guardadoEn < 30 * 60 * 1000) {
+        datosMar = guardado;
+        estadoMar = "ok";
+        pintarMar();
+        return;
+      }
+
+      pedirClimaMar()
+        .then(function (d) {
+          try { localStorage.setItem("climaMarCR", JSON.stringify(d)); } catch (e) {}
+          datosMar = d;
+          estadoMar = "ok";
+          pintarMar();
+        })
+        .catch(function () {
+          if (guardado) {
+            datosMar = guardado;
+            estadoMar = "ok";
+          } else {
+            estadoMar = "error";
+          }
+          pintarMar();
+        });
+    }
+
     // Al cargar: idioma guardado; si no hay, el del navegador (inglés) o español por defecto
     var idiomaGuardado = null;
     try { idiomaGuardado = localStorage.getItem("idioma"); } catch (e) {}
@@ -397,27 +620,114 @@
     cambiarIdioma(idiomaGuardado || delNavegador);
 
     cargarTipoCambio();
+    cargarClimaMar();
 
-    // 1. Formulario: enviar cotización por WhatsApp (en el idioma elegido)
+    // 1. Formulario: guarda la reserva en Google Calendar y luego ofrece confirmar por WhatsApp
+    // Pega aquí la dirección de tu aplicación web de Apps Script (termina en /exec)
+    var URL_CALENDARIO = "https://script.google.com/macros/s/AKfycbwto6Z94kVIc0Q6ufz0aVBqbAVni64rk_7mgPCakzCfl7qSg-8B93BAs53op3Jj3Mk-Sg/exec";
+
+    var reservaEstado = "";        // "", "enviando", "ok" o "fallo"
+    var enviandoReserva = false;
+
+    // Escribe el mensaje de la reserva en el idioma actual
+    function pintarReserva() {
+      var caja = document.getElementById("reserva-resultado");
+      var mensaje = document.getElementById("reserva-mensaje");
+      if (!caja || !mensaje) { return; }
+
+      if (!reservaEstado) {
+        caja.hidden = true;
+        return;
+      }
+      var t = traducciones[idiomaActual];
+      mensaje.textContent = t["reserva_" + reservaEstado];
+      document.getElementById("reserva-whatsapp").hidden = (reservaEstado === "enviando");
+      caja.hidden = false;
+    }
+
+    // La fecha mínima para reservar es hoy (hora de Costa Rica)
+    (function () {
+      var campoFecha = document.getElementById("fecha");
+      if (campoFecha) {
+        campoFecha.min = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString().slice(0, 10);
+      }
+    })();
+
     document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
       e.preventDefault();
+      if (enviandoReserva) { return; }
 
+      var formulario = e.target;
+      var boton = formulario.querySelector("button[type=submit]");
       var t = traducciones[idiomaActual];
-      var nombre = document.getElementById("nombre").value;
-      var telefono = document.getElementById("telefono").value;
-      var ruta = document.getElementById("ruta").value;
-      var detalles = document.getElementById("detalles").value;
 
+      var datos = {
+        nombre: document.getElementById("nombre").value.trim(),
+        telefono: document.getElementById("telefono").value.trim(),
+        ruta: document.getElementById("ruta").value.trim(),
+        fecha: document.getElementById("fecha").value,   // ejemplo: 2026-10-20
+        hora: document.getElementById("hora").value,     // ejemplo: 14:30
+        detalles: document.getElementById("detalles").value.trim(),
+        idioma: idiomaActual,
+        web: document.getElementById("web").value        // campo trampa anti-spam: debe ir vacío
+      };
+
+      // Mensaje de WhatsApp (queda listo en el botón "Confirmar por WhatsApp")
       var mensaje =
         t.wa_saludo + "\n" +
-        t.wa_nombre + nombre + "\n" +
-        t.wa_telefono + telefono + "\n" +
-        t.wa_ruta + ruta + "\n" +
-        t.wa_detalles + (detalles || t.wa_noindicado);
+        t.wa_nombre + datos.nombre + "\n" +
+        t.wa_telefono + datos.telefono + "\n" +
+        t.wa_ruta + datos.ruta + "\n" +
+        t.wa_fecha + datos.fecha + "\n" +
+        t.wa_hora + datos.hora + "\n" +
+        t.wa_detalles + (datos.detalles || t.wa_noindicado);
 
-      var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
-      window.open(url, "_blank");
-    });
+      document.getElementById("reserva-whatsapp").href =
+        "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
+
+      var terminar = function (estado) {
+        reservaEstado = estado;
+        enviandoReserva = false;
+        boton.disabled = false;
+        if (estado === "ok") { formulario.reset(); }
+        pintarReserva();
+        document.getElementById("reserva-resultado").scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+
+      enviandoReserva = true;
+      boton.disabled = true;
+      reservaEstado = "enviando";
+      pintarReserva();
+
+      if (URL_CALENDARIO.indexOf("http") !== 0) {
+        terminar("fallo");
+        return;
+      }
+
+      fetch(URL_CALENDARIO, {
+        method: "POST",
+        body: new URLSearchParams(datos)
+      })
+        .then(function (respuesta) {
+        return respuesta.text();
+      })
+        .then(function (texto) {
+         texto = texto.trim();
+
+        if (texto === "ok") {
+          terminar("ok");
+        } else if (
+          texto.toLowerCase().indexOf("horario no disponible") !== -1
+        ) {
+          terminar("no_disponible");
+        } else {
+      terminar("fallo");
+    }
+  })
+  .catch(function () {
+    terminar("fallo");
+  });
+});
 
     // 2. Animación al hacer scroll en toda la página
     var elementos = document.querySelectorAll(
@@ -451,7 +761,5 @@
       observador.observe(el);
     });
   </script>
-
 </body>
 </html>
-
