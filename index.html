@@ -89,7 +89,7 @@
         <article class="tarjeta destacada">
           <span class="icono">👥</span>
           <h3 data-i18n="veh3_t">Capacidad</h3>
-          <p data-i18n="veh3_p">Máximo 7 personas, con espacio para el equipaje.</p>
+          <p data-i18n="veh3_p">Comodidad, con espacio para el equipaje.</p>
         </article>
         <article class="tarjeta destacada">
           <span class="icono">♿</span>
@@ -174,6 +174,16 @@
         veh3_p: "Máximo 7 personas, con espacio para el equipaje.",
         veh4_t: "Accesible",
         veh4_p: "Cuenta con rampa para personas en silla de ruedas.",
+        // Tipo de cambio
+        cambio_titulo: "Tipo de cambio",
+        cambio_nota: "Valores de referencia. Pueden variar según el banco o la casa de cambio.",
+        cambio_cargando: "Cargando...",
+        cambio_error: "No disponible por ahora",
+        cambio_venta: "Venta: ",
+        cambio_compra: "Compra: ",
+        cambio_aprox: "$1 ≈ ",
+        cambio_actualizado: "Actualizado: ",
+        cambio_fuente_bccr: "Fuente: Banco Central de Costa Rica, vía Ministerio de Hacienda.",
         cont_titulo: "Contáctanos",
         cont_datos: "📞 Tel: +506 8533-2614 \u00A0|\u00A0 ✉️ 42tinoco@gmail.com",
         ph_nombre: "Tu nombre",
@@ -217,6 +227,16 @@
         veh3_p: "Up to 7 people, with room for luggage.",
         veh4_t: "Accessible",
         veh4_p: "Equipped with a ramp for wheelchair users.",
+        // Exchange rate
+        cambio_titulo: "Exchange rate",
+        cambio_nota: "Reference values. They may vary depending on the bank or exchange office.",
+        cambio_cargando: "Loading...",
+        cambio_error: "Not available right now",
+        cambio_venta: "Selling rate: ",
+        cambio_compra: "Buying rate: ",
+        cambio_aprox: "$1 ≈ ",
+        cambio_actualizado: "Updated: ",
+        cambio_fuente_bccr: "Source: Central Bank of Costa Rica, via the Ministry of Finance.",
         cont_titulo: "Contact us",
         cont_datos: "📞 Phone: +506 8533-2614 \u00A0|\u00A0 ✉️ 42tinoco@gmail.com",
         ph_nombre: "Your name",
@@ -260,61 +280,59 @@
         b.classList.toggle("activo", b.getAttribute("data-lang") === idioma);
       });
 
+      // El tipo de cambio también se vuelve a escribir en el idioma elegido
+      pintarCambio();
+
       // Recordar la elección
       try { localStorage.setItem("idioma", idioma); } catch (e) {}
     }
 
-    // Al cargar: idioma guardado; si no hay, el del navegador (inglés) o español por defecto
-    var guardado = null;
-    try { guardado = localStorage.getItem("idioma"); } catch (e) {}
-    var delNavegador = (navigator.language || "es").slice(0, 2) === "en" ? "en" : "es";
-    cambiarIdioma(guardado || delNavegador);
+    // ===== Tipo de cambio (colones por dólar) =====
+    var ultimaTasa = null;
+    var cambioEstado = "cargando"; // "cargando", "ok" o "error"
 
-    // 1. Formulario: enviar cotización por WhatsApp (en el idioma elegido)
-    document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      var t = traducciones[idiomaActual];
-      var nombre = document.getElementById("nombre").value;
-      var telefono = document.getElementById("telefono").value;
-      var ruta = document.getElementById("ruta").value;
-      var detalles = document.getElementById("detalles").value;
-
-      var mensaje =
-        t.wa_saludo + "\n" +
-        t.wa_nombre + nombre + "\n" +
-        t.wa_telefono + telefono + "\n" +
-        t.wa_ruta + ruta + "\n" +
-        t.wa_detalles + (detalles || t.wa_noindicado);
-
-      var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
-      window.open(url, "_blank");
-    });
-
-
-           // ===== Tipo de cambio (colones por dólar) =====
     function formatoCRC(n) {
-      return "₡" + n.toLocaleString("es-CR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      var formato = idiomaActual === "en" ? "en-US" : "es-CR";
+      return "₡" + n.toLocaleString(formato, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    function mostrarTasa(d) {
+    // Escribe el tipo de cambio en la página, en el idioma actual
+    function pintarCambio() {
+      var t = traducciones[idiomaActual];
       var venta = document.getElementById("cambio-venta");
       var compra = document.getElementById("cambio-compra");
+      var fecha = document.getElementById("cambio-fecha");
+      var fuente = document.getElementById("cambio-fuente");
+
+      if (cambioEstado !== "ok" || !ultimaTasa) {
+        venta.textContent = cambioEstado === "error" ? t.cambio_error : t.cambio_cargando;
+        compra.textContent = "";
+        fecha.textContent = "";
+        fuente.textContent = "";
+        return;
+      }
+
+      var d = ultimaTasa;
       if (d.compra) {
-        venta.textContent = "Venta: " + formatoCRC(d.venta);
-        compra.textContent = "Compra: " + formatoCRC(d.compra);
+        venta.textContent = t.cambio_venta + formatoCRC(d.venta);
+        compra.textContent = t.cambio_compra + formatoCRC(d.compra);
       } else {
-        venta.textContent = "$1 ≈ " + formatoCRC(d.venta);
+        venta.textContent = t.cambio_aprox + formatoCRC(d.venta);
         compra.textContent = "";
       }
-      document.getElementById("cambio-fecha").textContent = "Actualizado: " + d.fecha;
+      fecha.textContent = t.cambio_actualizado + d.fecha;
 
-      var fuente = document.getElementById("cambio-fuente");
       if (d.origen === "hacienda") {
-        fuente.textContent = "Fuente: Banco Central de Costa Rica, vía Ministerio de Hacienda.";
+        fuente.textContent = t.cambio_fuente_bccr;
       } else {
         fuente.innerHTML = '<a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a>';
       }
+    }
+
+    function mostrarTasa(d) {
+      ultimaTasa = d;
+      cambioEstado = "ok";
+      pintarCambio();
     }
 
     // Primero intenta con la referencia oficial; si falla, usa la de respaldo
@@ -366,12 +384,40 @@
           if (guardado) {
             mostrarTasa(guardado);
           } else {
-            document.getElementById("cambio-venta").textContent = "No disponible por ahora";
+            cambioEstado = "error";
+            pintarCambio();
           }
         });
     }
 
+    // Al cargar: idioma guardado; si no hay, el del navegador (inglés) o español por defecto
+    var idiomaGuardado = null;
+    try { idiomaGuardado = localStorage.getItem("idioma"); } catch (e) {}
+    var delNavegador = (navigator.language || "es").slice(0, 2) === "en" ? "en" : "es";
+    cambiarIdioma(idiomaGuardado || delNavegador);
+
     cargarTipoCambio();
+
+    // 1. Formulario: enviar cotización por WhatsApp (en el idioma elegido)
+    document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var t = traducciones[idiomaActual];
+      var nombre = document.getElementById("nombre").value;
+      var telefono = document.getElementById("telefono").value;
+      var ruta = document.getElementById("ruta").value;
+      var detalles = document.getElementById("detalles").value;
+
+      var mensaje =
+        t.wa_saludo + "\n" +
+        t.wa_nombre + nombre + "\n" +
+        t.wa_telefono + telefono + "\n" +
+        t.wa_ruta + ruta + "\n" +
+        t.wa_detalles + (detalles || t.wa_noindicado);
+
+      var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
+      window.open(url, "_blank");
+    });
 
     // 2. Animación al hacer scroll en toda la página
     var elementos = document.querySelectorAll(
