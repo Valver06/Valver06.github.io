@@ -100,6 +100,25 @@
     </div>
   </section>
 
+      <!-- TIPO DE CAMBIO -->
+  <section class="seccion" id="cambio">
+    <div class="contenedor">
+      <h2>Tipo de cambio</h2>
+
+      <div class="tarjeta cambio-tarjeta">
+        <span class="icono">💵</span>
+        <p class="precio" id="cambio-venta">Cargando...</p>
+        <p id="cambio-compra"></p>
+        <p class="nota-cambio" id="cambio-fecha"></p>
+      </div>
+
+      <p class="texto-centrado nota-cambio">
+        Valores de referencia. Pueden variar según el banco o la casa de cambio.<br>
+        <span id="cambio-fuente"></span>
+      </p>
+    </div>
+  </section>
+
   <!-- CONTACTO -->
   <section class="seccion gris" id="contacto">
     <div class="contenedor">
@@ -271,6 +290,88 @@
       var url = "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
       window.open(url, "_blank");
     });
+
+
+           // ===== Tipo de cambio (colones por dólar) =====
+    function formatoCRC(n) {
+      return "₡" + n.toLocaleString("es-CR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function mostrarTasa(d) {
+      var venta = document.getElementById("cambio-venta");
+      var compra = document.getElementById("cambio-compra");
+      if (d.compra) {
+        venta.textContent = "Venta: " + formatoCRC(d.venta);
+        compra.textContent = "Compra: " + formatoCRC(d.compra);
+      } else {
+        venta.textContent = "$1 ≈ " + formatoCRC(d.venta);
+        compra.textContent = "";
+      }
+      document.getElementById("cambio-fecha").textContent = "Actualizado: " + d.fecha;
+
+      var fuente = document.getElementById("cambio-fuente");
+      if (d.origen === "hacienda") {
+        fuente.textContent = "Fuente: Banco Central de Costa Rica, vía Ministerio de Hacienda.";
+      } else {
+        fuente.innerHTML = '<a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a>';
+      }
+    }
+
+    // Primero intenta con la referencia oficial; si falla, usa la de respaldo
+    function pedirTasa(hoy) {
+      return fetch("https://api.hacienda.go.cr/indicadores/tc")
+        .then(function (r) { return r.json(); })
+        .then(function (datos) {
+          var venta = Number(datos.dolar.venta.valor);
+          var compra = Number(datos.dolar.compra.valor);
+          if (!venta || !compra) { throw new Error("Sin datos"); }
+          return {
+            origen: "hacienda",
+            compra: compra,
+            venta: venta,
+            fecha: String(datos.dolar.venta.fecha).slice(0, 10)
+          };
+        })
+        .catch(function () {
+          return fetch("https://open.er-api.com/v6/latest/USD")
+            .then(function (r) { return r.json(); })
+            .then(function (datos) {
+              if (datos.result !== "success" || !datos.rates || !datos.rates.CRC) {
+                throw new Error("Sin datos");
+              }
+              return { origen: "erapi", compra: null, venta: datos.rates.CRC, fecha: hoy };
+            });
+        });
+    }
+
+    function cargarTipoCambio() {
+      var guardado = null;
+      try { guardado = JSON.parse(localStorage.getItem("tipoCambioCR")); } catch (e) {}
+      var hoy = new Date().toISOString().slice(0, 10);
+
+      // Si ya se consultó hoy, usa lo guardado y no vuelve a pedir
+      if (guardado && guardado.consultado === hoy) {
+        mostrarTasa(guardado);
+        return;
+      }
+
+      pedirTasa(hoy)
+        .then(function (d) {
+          d.consultado = hoy;
+          try { localStorage.setItem("tipoCambioCR", JSON.stringify(d)); } catch (e) {}
+          mostrarTasa(d);
+        })
+        .catch(function () {
+          // Si todo falla, usa el último valor guardado o avisa
+          if (guardado) {
+            mostrarTasa(guardado);
+          } else {
+            document.getElementById("cambio-venta").textContent = "No disponible por ahora";
+          }
+        });
+    }
+
+    cargarTipoCambio();
 
     // 2. Animación al hacer scroll en toda la página
     var elementos = document.querySelectorAll(
