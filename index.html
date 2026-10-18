@@ -100,7 +100,66 @@
     </div>
   </section>
 
-      <!-- TIPO DE CAMBIO -->
+      <!-- MAPA -->
+  <section class="seccion gris" id="mapa">
+    <div class="contenedor">
+      <h2 data-i18n="mapa_titulo">Dónde trabajamos</h2>
+      <p class="texto-centrado" data-i18n="mapa_texto">Prestamos servicio en Playa Pavones, Golfito y sus alrededores.</p>
+
+      <div class="mapa-contenedor">
+        <iframe
+          src="https://www.google.com/maps?q=8.3987112,-83.1311115&z=15&output=embed"
+          title="Mapa de Taxi Playa Pavones de Golfito"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <p class="texto-centrado mapa-boton">
+        <a class="boton" href="https://maps.app.goo.gl/qqzC25a5AomckFr96" target="_blank" rel="noopener" data-i18n="mapa_boton">Abrir en Google Maps</a>
+      </p>
+    </div>
+  </section>
+
+    <!-- CLIMA Y MAR -->
+  <section class="seccion" id="clima">
+    <div class="contenedor">
+      <h2 data-i18n="clima_titulo">Clima y mar en Pavones</h2>
+
+      <div class="tarjetas">
+        <article class="tarjeta clima-tarjeta">
+          <span class="icono" id="clima-icono">⛅</span>
+          <h3 data-i18n="clima_aire">Clima</h3>
+          <p class="precio" id="clima-temp">...</p>
+          <p id="clima-desc"></p>
+          <p id="clima-viento"></p>
+        </article>
+
+        <article class="tarjeta clima-tarjeta">
+          <span class="icono">🌊</span>
+          <h3 data-i18n="clima_oleaje">Oleaje</h3>
+          <p class="precio" id="mar-olas"></p>
+          <p id="mar-periodo"></p>
+          <p id="mar-agua"></p>
+        </article>
+
+        <article class="tarjeta clima-tarjeta">
+          <span class="icono">🌙</span>
+          <h3 data-i18n="clima_mareas">Mareas</h3>
+          <p id="marea-alta"></p>
+          <p id="marea-baja"></p>
+        </article>
+      </div>
+
+      <p class="texto-centrado nota-cambio">
+        <span data-i18n="clima_nota">Datos de pronóstico solo de referencia. No los uses para navegar ni para decisiones de seguridad en el mar.</span><br>
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener">Weather data by Open-Meteo.com</a> · DWD
+      </p>
+    </div>
+  </section>
+
+  <!-- TIPO DE CAMBIO -->
   <section class="seccion" id="cambio">
     <div class="contenedor">
       <h2 data-i18n="cambio_titulo">Tipo de cambio</h2>
@@ -129,9 +188,31 @@
         <input type="text" id="nombre" placeholder="Tu nombre" data-i18n-placeholder="ph_nombre" required>
         <input type="tel" id="telefono" placeholder="Tu teléfono" data-i18n-placeholder="ph_telefono" required>
         <input type="text" id="ruta" placeholder="Origen y destino" data-i18n-placeholder="ph_ruta" required>
-        <textarea id="detalles" rows="4" placeholder="Fecha, hora y número de pasajeros" data-i18n-placeholder="ph_detalles"></textarea>
-        <button type="submit" class="boton" data-i18n="cont_enviar">Solicitar cotización por WhatsApp</button>
+
+        <div class="fila-fecha">
+          <label>
+            <span data-i18n="lbl_fecha">Fecha del viaje</span>
+            <input type="date" id="fecha" required>
+          </label>
+          <label>
+            <span data-i18n="lbl_hora">Hora de recogida</span>
+            <input type="time" id="hora" required>
+          </label>
+        </div>
+
+        <textarea id="detalles" rows="4" placeholder="Número de pasajeros y detalles del viaje" data-i18n-placeholder="ph_detalles"></textarea>
+
+        <!-- Campo trampa anti-spam: no lo borres ni lo llenes -->
+        <input type="text" id="web" class="trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button type="submit" class="boton" data-i18n="cont_enviar">Enviar solicitud de reserva</button>
+        <p class="nota-cambio" data-i18n="cont_nota">Al enviar, tu solicitud se registra en nuestro calendario y se abre WhatsApp para confirmarla.</p>
       </form>
+
+            <div class="reserva-resultado" id="reserva-resultado" hidden>
+        <p id="reserva-mensaje"></p>
+        <a class="boton verde" id="reserva-whatsapp" href="#" target="_blank" rel="noopener" data-i18n="reserva_btn_wa">Confirmar por WhatsApp</a>
+      </div>
 
       <p class="texto-centrado">
         <a class="boton verde" href="https://wa.me/50685332614" target="_blank" data-i18n="cont_wa">Escribir por WhatsApp</a>
