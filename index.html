@@ -293,6 +293,7 @@
         ph_telefono: "Tu teléfono",
         ph_ruta: "Origen y destino",
         lbl_fecha: "Fecha del viaje",
+        fecha_pasada: "Elige una fecha de hoy en adelante.",
         lbl_hora: "Hora de recogida",
         ph_detalles: "Número de pasajeros y detalles del viaje",
         cont_nota: "Al enviar, se abrirá WhatsApp con tu solicitud lista para mandar.",
@@ -374,6 +375,7 @@
         ph_telefono: "Your phone number",
         ph_ruta: "Pick-up and drop-off",
         lbl_fecha: "Trip date",
+        fecha_pasada: "Please choose today's date or a later one.",
         lbl_hora: "Pick-up time",
         ph_detalles: "Number of passengers and trip details",
         cont_nota: "When you send this, WhatsApp will open with your request ready to send.",
@@ -697,11 +699,33 @@
     // ===== 1. FORMULARIO: al enviarlo, abre WhatsApp directamente con los datos =====
     var NUMERO_WHATSAPP = "50685332614";
 
-    // La fecha mínima para reservar es hoy (hora de Costa Rica)
+        // La fecha mínima para reservar es hoy (hora de Costa Rica)
+    function hoyCostaRica() {
+      return new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    }
+
+    // Revisa que la fecha no sea anterior a hoy; si lo es, la borra y avisa
+    function validarFecha() {
+      var campo = document.getElementById("fecha");
+      if (!campo) { return true; }
+
+      if (campo.value && campo.value < hoyCostaRica()) {
+        campo.value = "";
+        campo.setCustomValidity(traducciones[idiomaActual].fecha_pasada);
+        campo.reportValidity();
+        campo.setCustomValidity("");
+        return false;
+      }
+      return true;
+    }
+
     (function () {
       var campoFecha = document.getElementById("fecha");
       if (campoFecha) {
-        campoFecha.min = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString().slice(0, 10);
+        campoFecha.min = hoyCostaRica();
+        // En el celular se valida apenas se elige la fecha
+        campoFecha.addEventListener("change", validarFecha);
+        campoFecha.addEventListener("blur", validarFecha);
       }
     })();
 
@@ -711,6 +735,8 @@
       // Campo trampa anti-spam: si tiene algo, es un robot y no se envía
       var trampa = document.getElementById("web");
       if (trampa && trampa.value) { return; }
+            // No se permiten fechas anteriores a hoy
+      if (!validarFecha()) { return; }
 
       var t = traducciones[idiomaActual];
 
