@@ -227,7 +227,6 @@
 
 <script>
     // ===== 0. IDIOMAS (español / inglés) =====
-    // La clave (por ejemplo "hero_titulo") es la misma que va en data-i18n="..." en el HTML.
     var traducciones = {
       es: {
         menu_servicios: "Servicios",
@@ -296,13 +295,8 @@
         lbl_fecha: "Fecha del viaje",
         lbl_hora: "Hora de recogida",
         ph_detalles: "Número de pasajeros y detalles del viaje",
-        cont_nota: "Al enviar, tu solicitud se registra en nuestro calendario. Después podrás confirmarla por WhatsApp.",
-        reserva_enviando: "Enviando tu solicitud...",
-        reserva_ok: "✅ ¡Solicitud registrada! Para confirmarla, envíanos el mensaje por WhatsApp.",
-        reserva_no_disponible: "❌ Ese horario no está disponible. Elige otra hora o fecha para tu viaje.",
-        reserva_fallo: "No pudimos registrar la solicitud automáticamente. Por favor, inténtalo nuevamente o contáctanos por WhatsApp.",
-        reserva_btn_wa: "Confirmar por WhatsApp",
-        cont_enviar: "Enviar solicitud de reserva",
+        cont_nota: "Al enviar, se abrirá WhatsApp con tu solicitud lista para mandar.",
+        cont_enviar: "Enviar solicitud por WhatsApp",
         cont_wa: "Escribir por WhatsApp",
         pie: "© 2026 Playa Pavones Tours. Todos los derechos reservados.",
         // Mensaje que se envía por WhatsApp
@@ -382,12 +376,8 @@
         lbl_fecha: "Trip date",
         lbl_hora: "Pick-up time",
         ph_detalles: "Number of passengers and trip details",
-        cont_nota: "When you send this, your request is saved in our calendar. Then you can confirm it on WhatsApp.",
-        reserva_enviando: "Sending your request...",
-        reserva_ok: "✅ Request received! To confirm it, send us the message on WhatsApp.",
-        reserva_no_disponible: "❌ That time is unavailable. Please choose another time or date for your trip.",
-        reserva_fallo: "We couldn't save your request automatically. Please try again or contact us on WhatsApp.",
-        cont_enviar: "Send booking request",
+        cont_nota: "When you send this, WhatsApp will open with your request ready to send.",
+        cont_enviar: "Send request via WhatsApp",
         cont_wa: "Message us on WhatsApp",
         pie: "© 2026 Playa Pavones Tours. All rights reserved.",
         wa_saludo: "Hello, I would like to request a quote.",
@@ -429,7 +419,6 @@
       // El tipo de cambio y el clima también se vuelven a escribir en el idioma elegido
       pintarCambio();
       pintarMar();
-      pintarReserva();
 
       // Recordar la elección
       try { localStorage.setItem("idioma", idioma); } catch (e) {}
@@ -451,6 +440,9 @@
       var compra = document.getElementById("cambio-compra");
       var fecha = document.getElementById("cambio-fecha");
       var fuente = document.getElementById("cambio-fuente");
+
+      // Si la sección todavía no está en el HTML, no hace nada
+      if (!venta || !compra || !fecha || !fuente) { return; }
 
       if (cambioEstado !== "ok" || !ultimaTasa) {
         venta.textContent = cambioEstado === "error" ? t.cambio_error : t.cambio_cargando;
@@ -543,7 +535,6 @@
     var datosMar = null;
     var estadoMar = "cargando"; // "cargando", "ok" o "error"
 
-    // Dirección de la API. Si contratas el plan comercial, aquí cambia el servidor y agrega tu clave
     var API_CLIMA = "https://api.open-meteo.com/v1/forecast";
     var API_MAR = "https://marine-api.open-meteo.com/v1/marine";
 
@@ -703,28 +694,8 @@
     cargarTipoCambio();
     cargarClimaMar();
 
-    // 1. Formulario: guarda la reserva en Google Calendar y luego ofrece confirmar por WhatsApp
-    // Pega aquí la dirección de tu aplicación web de Apps Script (termina en /exec)
-    var URL_CALENDARIO = "https://script.google.com/macros/s/AKfycbwto6Z94kVIc0Q6ufz0aVBqbAVni64rk_7mgPCakzCfl7qSg-8B93BAs53op3Jj3Mk-Sg/exec";
-
-    var reservaEstado = "";        // "", "enviando", "ok" o "fallo"
-    var enviandoReserva = false;
-
-    // Escribe el mensaje de la reserva en el idioma actual
-    function pintarReserva() {
-      var caja = document.getElementById("reserva-resultado");
-      var mensaje = document.getElementById("reserva-mensaje");
-      if (!caja || !mensaje) { return; }
-
-      if (!reservaEstado) {
-        caja.hidden = true;
-        return;
-      }
-      var t = traducciones[idiomaActual];
-      mensaje.textContent = t["reserva_" + reservaEstado];
-      document.getElementById("reserva-whatsapp").hidden = (reservaEstado === "enviando");
-      caja.hidden = false;
-    }
+    // ===== 1. FORMULARIO: al enviarlo, abre WhatsApp directamente con los datos =====
+    var NUMERO_WHATSAPP = "50685332614";
 
     // La fecha mínima para reservar es hoy (hora de Costa Rica)
     (function () {
@@ -736,81 +707,36 @@
 
     document.getElementById("form-cotizacion").addEventListener("submit", function (e) {
       e.preventDefault();
-      if (enviandoReserva) { return; }
 
-      var formulario = e.target;
-      var boton = formulario.querySelector("button[type=submit]");
+      // Campo trampa anti-spam: si tiene algo, es un robot y no se envía
+      var trampa = document.getElementById("web");
+      if (trampa && trampa.value) { return; }
+
       var t = traducciones[idiomaActual];
 
-      var datos = {
-        nombre: document.getElementById("nombre").value.trim(),
-        telefono: document.getElementById("telefono").value.trim(),
-        ruta: document.getElementById("ruta").value.trim(),
-        fecha: document.getElementById("fecha").value,   // ejemplo: 2026-10-20
-        hora: document.getElementById("hora").value,     // ejemplo: 14:30
-        detalles: document.getElementById("detalles").value.trim(),
-        idioma: idiomaActual,
-        web: document.getElementById("web").value        // campo trampa anti-spam: debe ir vacío
-      };
+      var nombre = document.getElementById("nombre").value.trim();
+      var telefono = document.getElementById("telefono").value.trim();
+      var ruta = document.getElementById("ruta").value.trim();
+      var fecha = document.getElementById("fecha").value;
+      var hora = document.getElementById("hora").value;
+      var detalles = document.getElementById("detalles").value.trim();
 
-      // Mensaje de WhatsApp (queda listo en el botón "Confirmar por WhatsApp")
       var mensaje =
         t.wa_saludo + "\n" +
-        t.wa_nombre + datos.nombre + "\n" +
-        t.wa_telefono + datos.telefono + "\n" +
-        t.wa_ruta + datos.ruta + "\n" +
-        t.wa_fecha + datos.fecha + "\n" +
-        t.wa_hora + datos.hora + "\n" +
-        t.wa_detalles + (datos.detalles || t.wa_noindicado);
+        t.wa_nombre + nombre + "\n" +
+        t.wa_telefono + telefono + "\n" +
+        t.wa_ruta + ruta + "\n" +
+        t.wa_fecha + fecha + "\n" +
+        t.wa_hora + hora + "\n" +
+        t.wa_detalles + (detalles || t.wa_noindicado);
 
-      document.getElementById("reserva-whatsapp").href =
-        "https://wa.me/50685332614?text=" + encodeURIComponent(mensaje);
+      var enlace = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
 
-      var terminar = function (estado) {
-        reservaEstado = estado;
-        enviandoReserva = false;
-        boton.disabled = false;
-        if (estado === "ok") { formulario.reset(); }
-        pintarReserva();
-        document.getElementById("reserva-resultado").scrollIntoView({ behavior: "smooth", block: "center" });
-      };
+      window.open(enlace, "_blank", "noopener");
+      e.target.reset();
+    });
 
-      enviandoReserva = true;
-      boton.disabled = true;
-      reservaEstado = "enviando";
-      pintarReserva();
-
-      if (URL_CALENDARIO.indexOf("http") !== 0) {
-        terminar("fallo");
-        return;
-      }
-
-      fetch(URL_CALENDARIO, {
-        method: "POST",
-        body: new URLSearchParams(datos)
-      })
-        .then(function (respuesta) {
-        return respuesta.text();
-      })
-        .then(function (texto) {
-         texto = texto.trim();
-
-        if (texto === "ok") {
-          terminar("ok");
-        } else if (
-          texto.toLowerCase().indexOf("horario no disponible") !== -1
-        ) {
-          terminar("no_disponible");
-        } else {
-      terminar("fallo");
-    }
-  })
-  .catch(function () {
-    terminar("fallo");
-  });
-});
-
-    // 2. Animación al hacer scroll en toda la página
+    // ===== 2. Animación al hacer scroll en toda la página =====
     var elementos = document.querySelectorAll(
       ".seccion h2, .tarjeta, .texto-centrado, .formulario"
     );
